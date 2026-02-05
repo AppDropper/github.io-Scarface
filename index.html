@@ -35,6 +35,19 @@
             overflow-x: hidden;
         }
 
+        body.splash-active {
+            overflow: hidden;
+        }
+
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
         /* SPLASH SCREEN / PAGE INFO */
         .splash-screen {
             position: fixed;
@@ -48,11 +61,14 @@
             align-items: center;
             justify-content: center;
             transition: opacity 0.6s ease, visibility 0.6s ease;
+            opacity: 1;
+            visibility: visible;
         }
 
         .splash-screen.hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
         }
 
         .splash-content {
@@ -1183,22 +1199,24 @@
         ℹ️
     </button>
 
-    <header class="header">
-        <h1 class="brand-title">🏔️ Scarface By Harmonie</h1>
-        <p class="brand-subtitle">Produits de qualité premium</p>
-    </header>
+    <div class="main-content" id="mainContent">
+        <header class="header">
+            <h1 class="brand-title">🏔️ Scarface By Harmonie</h1>
+            <p class="brand-subtitle">Produits de qualité premium</p>
+        </header>
 
-    <!-- SEARCH BAR -->
-    <div class="search-container">
-        <input type="text" class="search-bar" id="searchBar" placeholder="🔍 Rechercher un produit..." oninput="searchProducts()">
+        <!-- SEARCH BAR -->
+        <div class="search-container">
+            <input type="text" class="search-bar" id="searchBar" placeholder="🔍 Rechercher un produit..." oninput="searchProducts()">
+        </div>
+
+        <!-- NAVIGATION PAR CATÉGORIES -->
+        <nav class="category-nav">
+            <div class="category-tabs" id="categoryTabs"></div>
+        </nav>
+
+        <main class="products-section" id="productsContainer"></main>
     </div>
-
-    <!-- NAVIGATION PAR CATÉGORIES -->
-    <nav class="category-nav">
-        <div class="category-tabs" id="categoryTabs"></div>
-    </nav>
-
-    <main class="products-section" id="productsContainer"></main>
 
     <!-- Modal Produit -->
     <div class="modal" id="productModal">
@@ -1387,8 +1405,8 @@
                     ]
                 },
                 {
-                    id: 'Infos',
-                    name: '🎯Infos',
+                    id: 'accessories',
+                    name: '🎯 Accessoires',
                     products: [
                         {
                             id: 7,
@@ -1425,8 +1443,10 @@
             initTelegramWebApp();
             loadStoredData();
             flattenProducts();
-            // Charger les catégories immédiatement au cas où l'utilisateur masque le splash
+            // Charger les catégories en arrière-plan
             loadCategories();
+            // S'assurer que le splash est visible au démarrage
+            document.body.classList.add('splash-active');
         };
 
         function initTelegramWebApp() {
@@ -1439,12 +1459,22 @@
 
         function enterSite() {
             const splashScreen = document.getElementById('splashScreen');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Masquer le splash
             splashScreen.classList.add('hidden');
+            document.body.classList.remove('splash-active');
+            
+            // Afficher le contenu principal
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+            }, 100);
         }
 
         function showInfoModal() {
             const splashScreen = document.getElementById('splashScreen');
             splashScreen.classList.remove('hidden');
+            document.body.classList.add('splash-active');
         }
 
         function flattenProducts() {
@@ -1460,22 +1490,32 @@
             const query = document.getElementById('searchBar').value.toLowerCase().trim();
             
             if (!query) {
+                // Réafficher tous les produits
                 document.querySelectorAll('.product-card').forEach(card => {
                     card.style.display = '';
+                    card.style.animation = '';
                 });
                 return;
             }
 
+            // Filtrer les produits
             document.querySelectorAll('.product-card').forEach(card => {
                 const title = card.querySelector('.product-title').textContent.toLowerCase();
                 const desc = card.querySelector('.product-description').textContent.toLowerCase();
                 
                 if (title.includes(query) || desc.includes(query)) {
                     card.style.display = '';
+                    card.style.animation = 'fadeInUp 0.4s ease-out';
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            // Afficher un message si aucun résultat
+            const visibleCards = Array.from(document.querySelectorAll('.product-card')).filter(card => card.style.display !== 'none');
+            if (visibleCards.length === 0) {
+                showToast('😕 Aucun produit trouvé pour "' + query + '"');
+            }
         }
 
         function loadCategories() {
@@ -1731,14 +1771,39 @@
                 return;
             }
             
-            const message = `Bonjour ! Je souhaite commander :\n\n📦 ${currentProduct.name}\n📏 Format : ${selectedFormat.name}\n💰 Prix : ${selectedFormat.price}`;
+            // Génération automatique du message de commande
+            const message = `🛒 NOUVELLE COMMANDE\n\n` +
+                          `📦 Produit : ${currentProduct.name}\n` +
+                          `📏 Format : ${selectedFormat.name}\n` +
+                          `💰 Prix : ${selectedFormat.price}\n\n` +
+                          `👤 Client : ${getUserName()}\n` +
+                          `📅 Date : ${new Date().toLocaleDateString('fr-FR', {
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                          })}\n\n` +
+                          `✅ Commande confirmée !`;
+            
             const url = `https://t.me/${CONFIG.telegramUsername}?text=${encodeURIComponent(message)}`;
             
-            if (window.Telegram && window.Telegram.WebApp) {
-                window.Telegram.WebApp.openTelegramLink(url);
-            } else {
-                window.open(url, '_blank');
-            }
+            // Animation du bouton
+            const btn = event.target.closest('.order-btn');
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                btn.style.transform = '';
+            }, 200);
+            
+            showToast('📱 Redirection vers Telegram...');
+            
+            setTimeout(() => {
+                if (window.Telegram && window.Telegram.WebApp) {
+                    window.Telegram.WebApp.openTelegramLink(url);
+                } else {
+                    window.open(url, '_blank');
+                }
+            }, 500);
         }
 
         function addRating(rating) {
