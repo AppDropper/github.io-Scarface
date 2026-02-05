@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Harmonie 🌋 </title>
+    <title>🏔️Scarface By Harmonie🏔️</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-    <style> 
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -32,24 +32,11 @@
             background: var(--light-gray);
             color: var(--dark);
             line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        body.splash-active {
             overflow: hidden;
         }
 
-        .main-content {
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        .main-content.visible {
-            opacity: 1;
-        }
-
-        /* SPLASH SCREEN / PAGE INFO */
-        .splash-screen {
+        /* PAGE D'INFOS - PLEIN ÉCRAN SANS DÉFILEMENT */
+        .info-page {
             position: fixed;
             top: 0;
             left: 0;
@@ -60,22 +47,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-            opacity: 1;
-            visibility: visible;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
         }
 
-        .splash-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+        .info-page.hidden {
+            transform: translateY(-100%);
         }
 
-        .splash-content {
+        .info-container {
             text-align: center;
             color: var(--white);
             padding: 2rem;
             max-width: 600px;
+            width: 100%;
             animation: slideUp 0.8s ease-out;
         }
 
@@ -90,105 +75,134 @@
             }
         }
 
-        .splash-logo {
-            font-size: 4rem;
+        .info-logo {
+            font-size: 5rem;
             margin-bottom: 1rem;
-            animation: bounce 1s ease-in-out infinite alternate;
+            animation: bounce 1.5s ease-in-out infinite alternate;
         }
 
         @keyframes bounce {
             to {
-                transform: translateY(-10px);
+                transform: translateY(-15px);
             }
         }
 
-        .splash-title {
+        .info-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
             letter-spacing: -0.5px;
         }
 
-        .splash-subtitle {
+        .info-subtitle {
             font-size: 1.1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             opacity: 0.95;
             font-weight: 300;
         }
 
-        .splash-info {
+        .info-box {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             padding: 2rem;
-            border-radius: 20px;
+            border-radius: 24px;
             margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
         }
 
-        .splash-info h3 {
+        .info-box h3 {
             font-size: 1.3rem;
             margin-bottom: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
+            text-align: center;
         }
 
-        .info-list {
-            text-align: left;
-            list-style: none;
-            padding: 0;
-        }
-
-        .info-list li {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .info-item {
             display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .info-list li:last-child {
+        .info-item:last-child {
             border-bottom: none;
         }
 
         .info-icon {
-            width: 32px;
-            height: 32px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .info-value a {
+            color: var(--white);
+            text-decoration: underline;
+            font-weight: 500;
         }
 
         .enter-btn {
             background: var(--white);
             color: var(--primary);
             border: none;
-            padding: 1.2rem 3rem;
+            padding: 1.4rem 3.5rem;
             border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 800;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             position: relative;
             z-index: 10;
         }
 
         .enter-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
         }
 
         .enter-btn:active {
-            transform: translateY(-1px);
+            transform: translateY(-2px) scale(1.02);
         }
 
-        /* HEADER */
+        /* CONTENU PRINCIPAL */
+        .main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .header {
             background: var(--primary-gradient);
             padding: 2rem 1.5rem;
@@ -197,14 +211,13 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
         }
 
         .brand-title {
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
             margin-bottom: 0.5rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--white);
             letter-spacing: -0.5px;
         }
@@ -213,24 +226,23 @@
             color: rgba(255, 255, 255, 0.9);
             font-size: 0.9rem;
             font-weight: 300;
-            letter-spacing: 0.5px;
         }
 
         /* BOUTON INFO FLOTTANT */
         .floating-info-btn {
             position: fixed;
-            bottom: 100px;
+            bottom: 20px;
             right: 20px;
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             background: var(--primary-gradient);
             color: var(--white);
             border: none;
             border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             box-shadow: var(--shadow-hover);
-            z-index: 999;
+            z-index: 998;
             transition: var(--transition);
             display: flex;
             align-items: center;
@@ -238,60 +250,42 @@
         }
 
         .floating-info-btn:hover {
-            transform: scale(1.1) rotate(20deg);
+            transform: scale(1.15) rotate(20deg);
         }
 
-        /* NAVIGATION */
+        /* NAVIGATION CATÉGORIES */
         .category-nav {
             background: var(--white);
             padding: 1rem;
-            box-shadow: 0 2px 12px rgba(74, 144, 226, 0.1);
+            box-shadow: var(--shadow);
             position: sticky;
             top: 90px;
             z-index: 99;
-            backdrop-filter: blur(10px);
         }
 
         .category-tabs {
             display: flex;
-            gap: 0.75rem;
-            overflow-x: auto;
-            padding: 0.5rem;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary) var(--light-gray);
-        }
-
-        .category-tabs::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .category-tabs::-webkit-scrollbar-track {
-            background: var(--light-gray);
-            border-radius: 3px;
-        }
-
-        .category-tabs::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 3px;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .category-tab {
             background: var(--light-gray);
-            border: 2px solid transparent;
-            padding: 0.85rem 1.75rem;
+            border: 3px solid transparent;
+            padding: 1rem 2rem;
             border-radius: 50px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
-            white-space: nowrap;
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--gray);
         }
 
         .category-tab:hover {
             background: var(--primary-light);
             color: var(--primary-dark);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         .category-tab.active {
@@ -301,40 +295,12 @@
             box-shadow: var(--shadow);
         }
 
-        /* SEARCH BAR */
-        .search-container {
-            padding: 1.5rem;
-            background: var(--white);
-            box-shadow: 0 2px 8px rgba(74, 144, 226, 0.08);
-        }
-
-        .search-bar {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border: 2px solid var(--primary-light);
-            border-radius: 50px;
-            font-size: 1rem;
-            transition: var(--transition);
-            background: var(--light-gray);
-            color: var(--dark);
-        }
-
-        .search-bar:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: var(--white);
-            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
-        }
-
-        .search-bar::placeholder {
-            color: var(--gray);
-        }
-
-        /* PRODUCTS SECTION */
+        /* SECTION PRODUITS */
         .products-section {
-            padding: 2rem 1.5rem 5rem;
+            padding: 2rem 1.5rem 6rem;
             max-width: 1200px;
             margin: 0 auto;
+            min-height: calc(100vh - 300px);
         }
 
         .category-section {
@@ -359,10 +325,10 @@
 
         .category-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
             color: var(--dark);
-            font-weight: 700;
+            font-weight: 800;
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -370,56 +336,39 @@
 
         .category-title::before {
             content: '';
-            width: 4px;
-            height: 40px;
+            width: 5px;
+            height: 50px;
             background: var(--primary-gradient);
-            border-radius: 4px;
+            border-radius: 5px;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
         }
 
-        /* PRODUCT CARD */
+        /* CARTE PRODUIT */
         .product-card {
             background: var(--white);
             border-radius: 24px;
             overflow: hidden;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 4px 16px rgba(74, 144, 226, 0.1);
-            border: 2px solid transparent;
-            position: relative;
+            box-shadow: var(--shadow);
+            border: 3px solid transparent;
         }
 
         .product-card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-10px) scale(1.02);
             box-shadow: var(--shadow-hover);
             border-color: var(--primary);
-        }
-
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary-gradient);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover::before {
-            transform: scaleX(1);
         }
 
         .product-image-container {
             position: relative;
             overflow: hidden;
-            height: 260px;
+            height: 280px;
             background: linear-gradient(135deg, var(--primary-light) 0%, #E8F4FD 100%);
         }
 
@@ -431,7 +380,7 @@
         }
 
         .product-card:hover .product-image {
-            transform: scale(1.1) rotate(2deg);
+            transform: scale(1.15) rotate(3deg);
         }
 
         .product-badge {
@@ -441,53 +390,31 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             color: var(--primary);
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: 800;
             letter-spacing: 0.5px;
-            text-transform: uppercase;
             box-shadow: var(--shadow);
             border: 2px solid var(--primary-light);
         }
 
-        .quick-view-badge {
-            position: absolute;
-            bottom: 16px;
-            left: 50%;
-            transform: translateX(-50%) translateY(50px);
-            background: var(--primary-gradient);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .product-card:hover .quick-view-badge {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
         .product-info {
-            padding: 1.75rem;
+            padding: 2rem;
         }
 
         .product-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             margin-bottom: 0.75rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--dark);
-            line-height: 1.3;
         }
 
         .product-description {
             color: var(--gray);
-            margin-bottom: 1.25rem;
-            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
             line-height: 1.6;
         }
 
@@ -496,26 +423,30 @@
             justify-content: space-between;
             align-items: center;
             padding-top: 1rem;
-            border-top: 2px solid var(--primary-light);
+            border-top: 3px solid var(--primary-light);
         }
 
         .product-price {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 800;
             color: var(--primary);
-            font-family: 'Inter', sans-serif;
         }
 
-        .product-rating {
-            color: var(--primary);
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-            background: var(--primary-light);
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
+        .view-btn {
+            background: var(--primary-gradient);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .view-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow);
         }
 
         /* MODAL */
@@ -526,7 +457,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(74, 144, 226, 0.15);
+            background: rgba(74, 144, 226, 0.2);
             backdrop-filter: blur(12px);
             z-index: 1000;
             overflow-y: auto;
@@ -557,7 +488,7 @@
             position: relative;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 24px 64px rgba(74, 144, 226, 0.3);
+            box-shadow: 0 24px 64px rgba(74, 144, 226, 0.4);
             animation: modalSlideUp 0.4s ease-out;
         }
 
@@ -577,11 +508,11 @@
             top: 1.5rem;
             right: 1.5rem;
             background: var(--white);
-            border: 2px solid var(--primary-light);
+            border: 3px solid var(--primary-light);
             color: var(--primary);
-            font-size: 1.5rem;
-            width: 48px;
-            height: 48px;
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             z-index: 10;
@@ -596,214 +527,35 @@
         .modal-close:hover {
             background: var(--primary);
             color: var(--white);
-            transform: rotate(90deg) scale(1.1);
+            transform: rotate(90deg) scale(1.15);
         }
 
-        /* CARROUSEL */
-        .modal-media-gallery {
-            position: relative;
-        }
-
-        .modal-media-main {
-            position: relative;
-            height: 450px;
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
             background: linear-gradient(135deg, var(--primary-light) 0%, #E8F4FD 100%);
-            border-radius: 32px 32px 0 0;
-            overflow: hidden;
         }
 
-        .modal-media-main img,
-        .modal-media-main video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--primary-light);
-            color: var(--primary);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.4rem;
-            font-weight: 700;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow);
-            z-index: 5;
-        }
-
-        .carousel-nav:hover {
-            background: var(--primary);
-            color: var(--white);
-            transform: translateY(-50%) scale(1.15);
-        }
-
-        .carousel-nav.prev {
-            left: 1rem;
-        }
-
-        .carousel-nav.next {
-            right: 1rem;
-        }
-
-        .carousel-nav:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .carousel-nav:disabled:hover {
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            color: var(--primary);
-        }
-
-        .carousel-indicators {
-            position: absolute;
-            bottom: 1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.5rem;
-            z-index: 5;
-        }
-
-        .carousel-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: var(--transition);
-            border: 2px solid transparent;
-        }
-
-        .carousel-indicator:hover {
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        .carousel-indicator.active {
-            background: var(--white);
-            width: 32px;
-            border-radius: 5px;
-            border-color: var(--primary);
-        }
-
-        .media-counter {
-            position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
-            background: rgba(74, 144, 226, 0.95);
-            backdrop-filter: blur(10px);
-            color: var(--white);
-            padding: 0.6rem 1.2rem;
-            border-radius: 24px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            z-index: 5;
-            box-shadow: var(--shadow);
-        }
-
-        .media-thumbnails {
-            display: flex;
-            gap: 0.75rem;
-            padding: 1.5rem;
-            overflow-x: auto;
-            background: var(--light-gray);
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary) var(--primary-light);
-        }
-
-        .media-thumbnails::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .media-thumbnails::-webkit-scrollbar-track {
-            background: var(--primary-light);
-            border-radius: 4px;
-        }
-
-        .media-thumbnails::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-
-        .media-thumbnail {
-            min-width: 90px;
-            height: 90px;
-            border-radius: 16px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .media-thumbnail:hover {
-            border-color: var(--primary-dark);
-            transform: scale(1.05);
-        }
-
-        .media-thumbnail.active {
-            border-color: var(--primary);
-            box-shadow: var(--shadow);
-        }
-
-        .media-thumbnail img,
-        .media-thumbnail video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .media-thumbnail.video::after {
-            content: '▶';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--primary);
-            color: var(--white);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            padding-left: 3px;
-            box-shadow: var(--shadow);
-        }
-
-        /* MODAL INFO */
         .modal-info {
             padding: 2.5rem;
         }
 
         .modal-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            margin-bottom: 0.75rem;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
             color: var(--dark);
             font-weight: 800;
-            line-height: 1.2;
         }
 
         .modal-price {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             font-weight: 800;
         }
 
@@ -811,22 +563,22 @@
             color: var(--gray);
             margin-bottom: 2.5rem;
             line-height: 1.8;
-            font-size: 1rem;
+            font-size: 1.05rem;
         }
 
         .format-label {
             display: block;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
             color: var(--dark);
         }
 
         .format-option {
             background: var(--light-gray);
-            padding: 1.25rem 1.5rem;
+            padding: 1.5rem;
             border-radius: 20px;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
             cursor: pointer;
             border: 3px solid transparent;
             display: flex;
@@ -838,7 +590,7 @@
         .format-option:hover {
             background: var(--primary-light);
             border-color: var(--primary);
-            transform: translateX(8px);
+            transform: translateX(10px);
         }
 
         .format-option.selected {
@@ -848,14 +600,15 @@
         }
 
         .format-name {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--dark);
+            font-size: 1.1rem;
         }
 
         .format-price {
             color: var(--primary);
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
         .order-btn {
@@ -863,189 +616,54 @@
             background: var(--primary-gradient);
             color: var(--white);
             border: none;
-            padding: 1.4rem;
+            padding: 1.6rem;
             border-radius: 20px;
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 800;
             cursor: pointer;
-            margin: 2.5rem 0;
+            margin-top: 2rem;
             transition: var(--transition);
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .order-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .order-btn:hover::before {
-            width: 400px;
-            height: 400px;
         }
 
         .order-btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-hover);
         }
 
-        .order-btn:active {
-            transform: translateY(-1px);
-        }
-
-        /* RATING & COMMENTS */
-        .rating-section,
-        .comments-section {
-            background: var(--light-gray);
-            padding: 2rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            border: 2px solid var(--primary-light);
-        }
-
-        .rating-section h3,
-        .comments-section h3 {
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .stars {
-            font-size: 2.2rem;
-            margin: 1rem 0;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .star {
-            cursor: pointer;
-            color: #D1D1D1;
-            transition: var(--transition);
-        }
-
-        .star:hover,
-        .star.active {
-            color: var(--primary);
-            transform: scale(1.2) rotate(10deg);
-        }
-
-        .rating-average {
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin-top: 1rem;
-            font-weight: 500;
-        }
-
-        .comment-form textarea {
-            width: 100%;
-            background: var(--white);
-            border: 2px solid var(--primary-light);
-            border-radius: 16px;
-            padding: 1.2rem;
-            color: var(--dark);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            resize: vertical;
-            transition: var(--transition);
-            line-height: 1.6;
-        }
-
-        .comment-form textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
-        }
-
-        .submit-comment {
-            margin-top: 1rem;
+        /* TOAST */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
             background: var(--primary-gradient);
             color: var(--white);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 16px;
+            padding: 1.2rem 2.5rem;
+            border-radius: 20px;
             font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-        }
-
-        .submit-comment:hover {
-            transform: translateY(-2px);
+            z-index: 10000;
             box-shadow: var(--shadow-hover);
+            animation: toastSlideIn 0.4s ease-out forwards;
+            font-size: 1rem;
         }
 
-        .comment {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 16px;
-            margin-top: 1rem;
-            border: 2px solid var(--primary-light);
-            transition: var(--transition);
-        }
-
-        .comment:hover {
-            border-color: var(--primary);
-            transform: translateX(4px);
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .comment-author {
-            font-weight: 700;
-            color: var(--dark);
-        }
-
-        .comment-rating {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .comment-text {
-            color: var(--gray);
-            line-height: 1.7;
-        }
-
-        .comment-date {
-            font-size: 0.8rem;
-            color: var(--gray);
-            margin-top: 0.75rem;
-        }
-
-        .no-comments {
-            text-align: center;
-            color: var(--gray);
-            padding: 3rem 1rem;
-            font-style: italic;
-        }
-
-        /* LOADING SKELETON */
-        .skeleton {
-            animation: skeleton-loading 1s linear infinite alternate;
-        }
-
-        @keyframes skeleton-loading {
-            0% {
-                background-color: hsl(200, 20%, 80%);
+        @keyframes toastSlideIn {
+            to {
+                transform: translateX(-50%) translateY(0);
             }
-            100% {
-                background-color: hsl(200, 20%, 95%);
+        }
+
+        .toast.hiding {
+            animation: toastSlideOut 0.4s ease-out forwards;
+        }
+
+        @keyframes toastSlideOut {
+            to {
+                transform: translateX(-50%) translateY(-100px);
+                opacity: 0;
             }
         }
 
@@ -1069,39 +687,39 @@
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+            .info-title {
+                font-size: 2rem;
             }
 
-            .splash-title {
-                font-size: 2rem;
+            .info-logo {
+                font-size: 3.5rem;
             }
 
             .brand-title {
                 font-size: 1.6rem;
             }
 
-            .modal-info {
-                padding: 2rem 1.5rem;
+            .category-title {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
             }
 
             .modal-title {
-                font-size: 1.8rem;
-            }
-
-            .modal-media-main {
-                height: 320px;
-            }
-
-            .category-nav {
-                top: 75px;
+                font-size: 2rem;
             }
 
             .floating-info-btn {
-                width: 48px;
-                height: 48px;
-                bottom: 80px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .enter-btn {
+                padding: 1.2rem 2.5rem;
+                font-size: 0.95rem;
             }
         }
 
@@ -1113,9 +731,6 @@
         .product-card:nth-child(1) { animation-delay: 0.1s; }
         .product-card:nth-child(2) { animation-delay: 0.15s; }
         .product-card:nth-child(3) { animation-delay: 0.2s; }
-        .product-card:nth-child(4) { animation-delay: 0.25s; }
-        .product-card:nth-child(5) { animation-delay: 0.3s; }
-        .product-card:nth-child(6) { animation-delay: 0.35s; }
 
         @keyframes fadeInUp {
             from {
@@ -1127,65 +742,61 @@
                 transform: translateY(0);
             }
         }
-
-        /* FEEDBACK TOAST */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: var(--primary-gradient);
-            color: var(--white);
-            padding: 1rem 2rem;
-            border-radius: 16px;
-            font-weight: 600;
-            z-index: 10000;
-            box-shadow: var(--shadow-hover);
-            animation: toastSlideIn 0.4s ease-out forwards;
-        }
-
-        @keyframes toastSlideIn {
-            to {
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        .toast.hiding {
-            animation: toastSlideOut 0.4s ease-out forwards;
-        }
-
-        @keyframes toastSlideOut {
-            to {
-                transform: translateX(-50%) translateY(-100px);
-                opacity: 0;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- SPLASH SCREEN / PAGE INFO -->
-    <div class="splash-screen" id="splashScreen">
-        <div class="splash-content">
-            <div class="splash-logo">🏔️</div>
-            <h1 class="splash-title">Scarface By Harmonie</h1>
-            <p class="splash-subtitle">Bienvenue dans notre boutique premium</p>
+    <!-- PAGE D'INFOS - PLEIN ÉCRAN -->
+    <div class="info-page" id="infoPage">
+        <div class="info-container">
+            <div class="info-logo">🏔️</div>
+            <h1 class="info-title">Scarface By Harmonie</h1>
+            <p class="info-subtitle">Produits de qualité premium</p>
             
-            <div class="splash-info">
-                <h3>📋 Informations importantes</h3>
-                <ul class="info-list">
-                    <li>
-                        <span class="info-icon">✅</span>
-                        <span>Produits de qualité premium certifiée</span>
-                    </li>
-                    <li>
-                        <span class="info-icon">🚚</span>
-                        <span>Livraison rapide et discrète</span>
-                    </li>
-                    <li>
-                        <span class="info-icon">💬</span>
-                        <span>Service client disponible 24/7</span>
-                    </li>
-                </ul>
+            <div class="info-box">
+                <h3>📍 Informations pratiques</h3>
+                
+                <div class="info-item">
+                    <div class="info-icon">📞</div>
+                    <div class="info-content">
+                        <div class="info-label">Contact</div>
+                        <div class="info-value">
+                            <a href="https://t.me/VotreUsername" target="_blank">@VotreUsername</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">🕐</div>
+                    <div class="info-content">
+                        <div class="info-label">Horaires</div>
+                        <div class="info-value">
+                            Lundi - Dimanche<br>
+                            10h00 - 23h00
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <div class="info-label">Localisation</div>
+                        <div class="info-value">
+                            Bordeaux, France<br>
+                            Service disponible 24/7
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">🚚</div>
+                    <div class="info-content">
+                        <div class="info-label">Livraison</div>
+                        <div class="info-value">
+                            Rapide et discrète<br>
+                            Sur toute la région
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <button class="enter-btn" onclick="enterSite()">
@@ -1194,23 +805,19 @@
         </div>
     </div>
 
-    <!-- BOUTON INFO FLOTTANT -->
-    <button class="floating-info-btn" onclick="showInfoModal()" title="Informations">
-        ℹ️
-    </button>
-
+    <!-- CONTENU PRINCIPAL -->
     <div class="main-content" id="mainContent">
+        <!-- BOUTON INFO FLOTTANT -->
+        <button class="floating-info-btn" onclick="showInfo()" title="Informations">
+            ℹ️
+        </button>
+
         <header class="header">
             <h1 class="brand-title">🏔️ Scarface By Harmonie</h1>
             <p class="brand-subtitle">Produits de qualité premium</p>
         </header>
 
-        <!-- SEARCH BAR -->
-        <div class="search-container">
-            <input type="text" class="search-bar" id="searchBar" placeholder="🔍 Rechercher un produit..." oninput="searchProducts()">
-        </div>
-
-        <!-- NAVIGATION PAR CATÉGORIES -->
+        <!-- NAVIGATION CATÉGORIES -->
         <nav class="category-nav">
             <div class="category-tabs" id="categoryTabs"></div>
         </nav>
@@ -1218,21 +825,12 @@
         <main class="products-section" id="productsContainer"></main>
     </div>
 
-    <!-- Modal Produit -->
+    <!-- MODAL PRODUIT -->
     <div class="modal" id="productModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">&times;</button>
             
-            <div class="modal-media-gallery">
-                <div class="modal-media-main" id="modalMediaMain">
-                    <img id="modalImage" src="" alt="">
-                    <button class="carousel-nav prev" id="prevBtn" onclick="navigateCarousel(-1)">‹</button>
-                    <button class="carousel-nav next" id="nextBtn" onclick="navigateCarousel(1)">›</button>
-                    <div class="media-counter" id="mediaCounter">1 / 1</div>
-                    <div class="carousel-indicators" id="carouselIndicators"></div>
-                </div>
-                <div class="media-thumbnails" id="mediaThumbnails"></div>
-            </div>
+            <img class="modal-image" id="modalImage" src="" alt="">
             
             <div class="modal-info">
                 <h2 class="modal-title" id="modalTitle"></h2>
@@ -1243,43 +841,25 @@
                 <div id="formatOptions"></div>
                 
                 <button class="order-btn" onclick="orderProduct()">
-                    <span style="position: relative; z-index: 1;">Commander maintenant 🛒</span>
+                    Commander maintenant 🛒
                 </button>
-                
-                <div class="rating-section">
-                    <h3>⭐ Notez ce produit</h3>
-                    <div class="stars" id="starsInput">
-                        <span class="star" onclick="addRating(1)">☆</span>
-                        <span class="star" onclick="addRating(2)">☆</span>
-                        <span class="star" onclick="addRating(3)">☆</span>
-                        <span class="star" onclick="addRating(4)">☆</span>
-                        <span class="star" onclick="addRating(5)">☆</span>
-                    </div>
-                    <p class="rating-average" id="ratingAverage"></p>
-                </div>
-                
-                <div class="comments-section">
-                    <h3>💬 Commentaires</h3>
-                    <div class="comment-form">
-                        <textarea id="commentInput" placeholder="Partagez votre expérience avec ce produit..." rows="3"></textarea>
-                        <button class="submit-comment" onclick="addComment()">Publier mon avis</button>
-                    </div>
-                    <div id="commentsList"></div>
-                </div>
             </div>
         </div>
     </div>
 
     <script>
         // ========================================
-        // ⚠️ CONFIGURATION
+        // CONFIGURATION
         // ========================================
         const CONFIG = {
-            telegramUsername: 'Lebon33000',
+            telegramUsername: 'VotreUsername', // ⚠️ MODIFIEZ ICI VOTRE @
+            contactLink: 'https://t.me/VotreUsername', // ⚠️ MODIFIEZ ICI
+            horaires: 'Lundi - Dimanche, 10h00 - 23h00', // ⚠️ MODIFIEZ ICI
+            lieu: 'Bordeaux, France', // ⚠️ MODIFIEZ ICI
             
             categories: [
                 {
-                    id: 'H',
+                    id: 'h',
                     name: '🍫 H',
                     products: [
                         {
@@ -1287,43 +867,29 @@
                             name: 'Frozen Sift 🧊',
                             description: 'Frozen Sift 🧊 - Wolf Farmz🐺',
                             price: '120€/10G',
-                            badge: '🔄🥇',
-                            media: [
-                                {
-                                    type: 'image',
-                                    url: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true'
-                                }
-                            ],
+                            badge: '🥇 Premium',
+                            image: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true',
                             formats: [
                                 { name: '4.5g', price: '60€' },
                                 { name: '10g', price: '120€' },
                                 { name: '50g', price: '500€' },
                                 { name: 'Livraison', price: '+10€' }
-                            ],
-                            ratings: [],
-                            comments: []
+                            ]
                         },
                         {
                             id: 2,
                             name: 'Dry 120U🌺',
                             description: 'Dry 120U🌺 - No Farm🧑‍🌾',
                             price: '70€/10G',
-                            badge: '🔄⭐',
-                            media: [
-                                {
-                                    type: 'image',
-                                    url: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true'
-                                }
-                            ],
+                            badge: '⭐ Top',
+                            image: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true',
                             formats: [
                                 { name: '3g', price: '30€' },
                                 { name: '5g', price: '40€' },
                                 { name: '10g', price: '70€' },
                                 { name: '50g', price: '250€' },
                                 { name: '100g', price: '450€' }
-                            ],
-                            ratings: [],
-                            comments: []
+                            ]
                         }
                     ]
                 },
@@ -1333,26 +899,17 @@
                     products: [
                         {
                             id: 3,
-                            name: 'Weed bientôt de retour !',
+                            name: 'Weed Premium',
                             description: 'Nos meilleures fleurs arrivent prochainement',
-                            price: '10€',
-                            badge: '🌿',
-                            media: [
-                                {
-                                    type: 'image',
-                                    url: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true'
-                                }
-                            ],
+                            price: '10€/g',
+                            badge: '🌿 Nature',
+                            image: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true',
                             formats: [
                                 { name: '2g', price: '20€' },
                                 { name: '3g', price: '30€' },
                                 { name: '5g', price: '50€' },
-                                { name: '8g', price: '80€' },
-                                { name: '10g', price: '100€' },
-                                { name: 'Livraison', price: '🎁' }
-                            ],
-                            ratings: [],
-                            comments: []
+                                { name: '10g', price: '100€' }
+                            ]
                         }
                     ]
                 },
@@ -1361,72 +918,31 @@
                     name: '💎 Labo',
                     products: [
                         {
-                            id: 5,
+                            id: 4,
                             name: 'Keta',
                             description: 'Qualité premium',
-                            price: '20€',
-                            badge: '🌈',
-                            media: [
-                                {
-                                    type: 'image',
-                                    url: 'https://github.com/AppDropper/LeVapp/blob/main/gitkeep/Capture%20d%E2%80%99%C3%A9cran%202026-01-17%20153548.jpg?raw=true'
-                                }
-                            ],
+                            price: '20€/g',
+                            badge: '🌈 Special',
+                            image: 'https://github.com/AppDropper/LeVapp/blob/main/gitkeep/Capture%20d%E2%80%99%C3%A9cran%202026-01-17%20153548.jpg?raw=true',
                             formats: [
                                 { name: '2g', price: '40€' },
                                 { name: '5g', price: '60€' },
                                 { name: '10g', price: '90€' }
-                            ],
-                            ratings: [],
-                            comments: []
+                            ]
                         },
                         {
-                            id: 6,
+                            id: 5,
                             name: 'Coco ❄️ 0.93',
                             description: 'Qualité supérieure',
-                            price: '60€',
-                            badge: '❄️',
-                            media: [
-                                {
-                                    type: 'image',
-                                    url: 'https://github.com/AppDropper/LeVapp/blob/main/gitkeep/Capture%20d%E2%80%99%C3%A9cran%202026-01-17%20153548.jpg?raw=true'
-                                }
-                            ],
+                            price: '60€/g',
+                            badge: '❄️ Pure',
+                            image: 'https://github.com/AppDropper/LeVapp/blob/main/gitkeep/Capture%20d%E2%80%99%C3%A9cran%202026-01-17%20153548.jpg?raw=true',
                             formats: [
                                 { name: '1g', price: '60€' },
                                 { name: '2g', price: '110€' },
-                                { name: '3g', price: '150€' },
                                 { name: '5g', price: '220€' },
                                 { name: '10g', price: '380€' }
-                            ],
-                            ratings: [],
-                            comments: []
-                        }
-                    ]
-                },
-                {
-                    id: 'Infos',
-                    name: '🎯Infos et cpntact',
-                    products: [
-                        {
-                            id: 7,
-                            name: 'Pack Découverte',
-                            description: 'Pack complet pour débutants',
-                            price: '€',
-                            badge: '🎁',
-                            media: [
-                                {
-                                    type: 'image',
-                                    url: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true'
-                                }
-                            ],
-                            formats: [
-                                { name: 'Pack Starter', price: '50€' },
-                                { name: 'Pack Premium', price: '100€' },
-                                { name: 'Pack VIP', price: '200€' }
-                            ],
-                            ratings: [],
-                            comments: []
+                            ]
                         }
                     ]
                 }
@@ -1435,18 +951,12 @@
 
         let currentProduct = null;
         let selectedFormat = null;
-        let currentCategory = null;
-        let currentMediaIndex = 0;
-        let allProducts = [];
 
+        // INITIALISATION
         window.onload = function() {
             initTelegramWebApp();
-            loadStoredData();
-            flattenProducts();
-            // Charger les catégories en arrière-plan
             loadCategories();
-            // S'assurer que le splash est visible au démarrage
-            document.body.classList.add('splash-active');
+            document.body.style.overflow = 'hidden'; // Bloquer le scroll initial
         };
 
         function initTelegramWebApp() {
@@ -1457,78 +967,33 @@
             }
         }
 
+        // NAVIGATION PAGE INFO
         function enterSite() {
-            const splashScreen = document.getElementById('splashScreen');
-            const mainContent = document.getElementById('mainContent');
-            
-            // Masquer le splash
-            splashScreen.classList.add('hidden');
-            document.body.classList.remove('splash-active');
-            
-            // Afficher le contenu principal
-            setTimeout(() => {
-                mainContent.classList.add('visible');
-            }, 100);
+            document.getElementById('infoPage').classList.add('hidden');
+            document.getElementById('mainContent').classList.add('visible');
+            document.body.style.overflow = 'auto'; // Activer le scroll
         }
 
-        function showInfoModal() {
-            const splashScreen = document.getElementById('splashScreen');
-            splashScreen.classList.remove('hidden');
-            document.body.classList.add('splash-active');
+        function showInfo() {
+            document.getElementById('infoPage').classList.remove('hidden');
+            document.getElementById('mainContent').classList.remove('visible');
+            document.body.style.overflow = 'hidden'; // Bloquer le scroll
         }
 
-        function flattenProducts() {
-            allProducts = [];
-            CONFIG.categories.forEach(cat => {
-                cat.products.forEach(prod => {
-                    allProducts.push({...prod, categoryId: cat.id, categoryName: cat.name});
-                });
-            });
-        }
-
-        function searchProducts() {
-            const query = document.getElementById('searchBar').value.toLowerCase().trim();
-            
-            if (!query) {
-                // Réafficher tous les produits
-                document.querySelectorAll('.product-card').forEach(card => {
-                    card.style.display = '';
-                    card.style.animation = '';
-                });
-                return;
-            }
-
-            // Filtrer les produits
-            document.querySelectorAll('.product-card').forEach(card => {
-                const title = card.querySelector('.product-title').textContent.toLowerCase();
-                const desc = card.querySelector('.product-description').textContent.toLowerCase();
-                
-                if (title.includes(query) || desc.includes(query)) {
-                    card.style.display = '';
-                    card.style.animation = 'fadeInUp 0.4s ease-out';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // Afficher un message si aucun résultat
-            const visibleCards = Array.from(document.querySelectorAll('.product-card')).filter(card => card.style.display !== 'none');
-            if (visibleCards.length === 0) {
-                showToast('😕 Aucun produit trouvé pour "' + query + '"');
-            }
-        }
-
+        // CHARGEMENT DES CATÉGORIES
         function loadCategories() {
             const tabsContainer = document.getElementById('categoryTabs');
             const productsContainer = document.getElementById('productsContainer');
             
             CONFIG.categories.forEach((category, index) => {
+                // Créer l'onglet
                 const tab = document.createElement('div');
                 tab.className = 'category-tab' + (index === 0 ? ' active' : '');
                 tab.textContent = category.name;
                 tab.onclick = function() { switchCategory(category.id, this); };
                 tabsContainer.appendChild(tab);
                 
+                // Créer la section
                 const section = document.createElement('div');
                 section.className = 'category-section' + (index === 0 ? ' active' : '');
                 section.id = `category-${category.id}`;
@@ -1538,13 +1003,11 @@
                 `;
                 productsContainer.appendChild(section);
                 
-                loadProductsForCategory(category);
+                loadProducts(category);
             });
         }
 
         function switchCategory(categoryId, tabElement) {
-            currentCategory = categoryId;
-            
             document.querySelectorAll('.category-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
@@ -1556,33 +1019,25 @@
             document.getElementById(`category-${categoryId}`).classList.add('active');
         }
 
-        function loadProductsForCategory(category) {
+        function loadProducts(category) {
             const grid = document.getElementById(`grid-${category.id}`);
             
             category.products.forEach(product => {
-                const avgRating = calculateAverageRating(product.ratings);
-                const mainImage = product.media && product.media[0] ? product.media[0].url : '';
-                
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.onclick = () => openProductModal(product);
+                card.onclick = () => openModal(product);
                 
                 card.innerHTML = `
                     <div class="product-image-container">
-                        <img src="${mainImage}" alt="${product.name}" class="product-image">
-                        ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
-                        <div class="quick-view-badge">👁️ Voir les détails</div>
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        <span class="product-badge">${product.badge}</span>
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">${product.name}</h3>
                         <p class="product-description">${product.description}</p>
                         <div class="product-footer">
                             <span class="product-price">${product.price}</span>
-                            <div class="product-rating">
-                                <span>★</span>
-                                <span>${avgRating.toFixed(1)}</span>
-                                <span>(${product.ratings.length})</span>
-                            </div>
+                            <button class="view-btn" onclick="event.stopPropagation(); openModal(${JSON.stringify(product).replace(/"/g, '&quot;')})">Voir →</button>
                         </div>
                     </div>
                 `;
@@ -1591,152 +1046,29 @@
             });
         }
 
-        function openProductModal(product) {
+        // MODAL
+        function openModal(product) {
+            if (typeof product === 'string') {
+                product = JSON.parse(product.replace(/&quot;/g, '"'));
+            }
+            
             currentProduct = product;
             selectedFormat = product.formats[0];
-            currentMediaIndex = 0;
             
             document.getElementById('modalTitle').textContent = product.name;
             document.getElementById('modalPrice').textContent = product.price;
             document.getElementById('modalDescription').textContent = product.description;
+            document.getElementById('modalImage').src = product.image;
             
-            loadMediaGallery(product);
             loadFormats(product.formats);
-            loadRatings(product);
-            loadComments(product);
             
             document.getElementById('productModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        function loadMediaGallery(product) {
-            const mainContainer = document.getElementById('modalMediaMain');
-            const thumbnailsContainer = document.getElementById('mediaThumbnails');
-            const indicatorsContainer = document.getElementById('carouselIndicators');
-            
-            if (!product.media || product.media.length === 0) {
-                mainContainer.innerHTML = '<img src="" alt="Pas d\'image">';
-                thumbnailsContainer.style.display = 'none';
-                indicatorsContainer.innerHTML = '';
-                document.getElementById('mediaCounter').textContent = '0 / 0';
-                return;
-            }
-            
-            if (product.media.length > 1) {
-                thumbnailsContainer.style.display = 'flex';
-            } else {
-                thumbnailsContainer.style.display = 'none';
-            }
-            
-            displayMedia(product.media[0], mainContainer);
-            updateMediaCounter();
-            
-            thumbnailsContainer.innerHTML = '';
-            product.media.forEach((media, index) => {
-                const thumb = document.createElement('div');
-                thumb.className = 'media-thumbnail' + (index === 0 ? ' active' : '') + (media.type === 'video' ? ' video' : '');
-                thumb.onclick = () => switchMedia(index);
-                
-                if (media.type === 'image') {
-                    thumb.innerHTML = `<img src="${media.url}" alt="Image ${index + 1}">`;
-                } else if (media.type === 'video') {
-                    thumb.innerHTML = `<video src="${media.url}" muted></video>`;
-                }
-                
-                thumbnailsContainer.appendChild(thumb);
-            });
-            
-            indicatorsContainer.innerHTML = '';
-            product.media.forEach((_, index) => {
-                const indicator = document.createElement('div');
-                indicator.className = 'carousel-indicator' + (index === 0 ? ' active' : '');
-                indicator.onclick = () => switchMedia(index);
-                indicatorsContainer.appendChild(indicator);
-            });
-            
-            updateCarouselButtons();
-        }
-
-        function navigateCarousel(direction) {
-            if (!currentProduct || !currentProduct.media) return;
-            
-            const newIndex = currentMediaIndex + direction;
-            
-            if (newIndex >= 0 && newIndex < currentProduct.media.length) {
-                switchMedia(newIndex);
-            }
-        }
-
-        function switchMedia(index) {
-            if (!currentProduct || !currentProduct.media) return;
-            
-            currentMediaIndex = index;
-            const media = currentProduct.media[index];
-            const mainContainer = document.getElementById('modalMediaMain');
-            
-            const videos = mainContainer.querySelectorAll('video');
-            videos.forEach(v => v.pause());
-            
-            displayMedia(media, mainContainer);
-            updateMediaCounter();
-            
-            document.querySelectorAll('.media-thumbnail').forEach((thumb, i) => {
-                thumb.classList.toggle('active', i === index);
-            });
-            
-            document.querySelectorAll('.carousel-indicator').forEach((indicator, i) => {
-                indicator.classList.toggle('active', i === index);
-            });
-            
-            updateCarouselButtons();
-        }
-
-        function displayMedia(media, container) {
-            const existingContent = container.querySelector('img, video');
-            
-            if (existingContent) {
-                existingContent.remove();
-            }
-            
-            let mediaElement;
-            if (media.type === 'image') {
-                mediaElement = document.createElement('img');
-                mediaElement.src = media.url;
-                mediaElement.alt = 'Produit';
-            } else if (media.type === 'video') {
-                mediaElement = document.createElement('video');
-                mediaElement.src = media.url;
-                mediaElement.controls = true;
-                mediaElement.autoplay = true;
-                mediaElement.loop = true;
-            }
-            
-            container.insertBefore(mediaElement, container.firstChild);
-        }
-
-        function updateMediaCounter() {
-            if (!currentProduct || !currentProduct.media) return;
-            
-            const counter = document.getElementById('mediaCounter');
-            counter.textContent = `${currentMediaIndex + 1} / ${currentProduct.media.length}`;
-        }
-
-        function updateCarouselButtons() {
-            if (!currentProduct || !currentProduct.media) return;
-            
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            
-            prevBtn.disabled = currentMediaIndex === 0;
-            nextBtn.disabled = currentMediaIndex === currentProduct.media.length - 1;
-        }
-
         function closeModal() {
             document.getElementById('productModal').classList.remove('active');
             document.body.style.overflow = 'auto';
-            
-            const videos = document.querySelectorAll('#modalMediaMain video');
-            videos.forEach(video => video.pause());
         }
 
         function loadFormats(formats) {
@@ -1765,35 +1097,32 @@
             element.classList.add('selected');
         }
 
+        // COMMANDE
         function orderProduct() {
             if (!selectedFormat) {
                 showToast('⚠️ Veuillez sélectionner un format');
                 return;
             }
             
-            // Génération automatique du message de commande
+            const userName = getUserName();
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
             const message = `🛒 NOUVELLE COMMANDE\n\n` +
                           `📦 Produit : ${currentProduct.name}\n` +
                           `📏 Format : ${selectedFormat.name}\n` +
                           `💰 Prix : ${selectedFormat.price}\n\n` +
-                          `👤 Client : ${getUserName()}\n` +
-                          `📅 Date : ${new Date().toLocaleDateString('fr-FR', {
-                              day: 'numeric',
-                              month: 'long',
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit'
-                          })}\n\n` +
-                          `✅ Commande confirmée !`;
+                          `👤 Client : ${userName}\n` +
+                          `📅 Date : ${dateStr}\n\n` +
+                          `✅ En attente de confirmation`;
             
             const url = `https://t.me/${CONFIG.telegramUsername}?text=${encodeURIComponent(message)}`;
-            
-            // Animation du bouton
-            const btn = event.target.closest('.order-btn');
-            btn.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                btn.style.transform = '';
-            }, 200);
             
             showToast('📱 Redirection vers Telegram...');
             
@@ -1806,100 +1135,6 @@
             }, 500);
         }
 
-        function addRating(rating) {
-            if (!currentProduct) return;
-            
-            currentProduct.ratings.push(rating);
-            saveToStorage();
-            loadRatings(currentProduct);
-            showToast('⭐ Merci pour votre note !');
-        }
-
-        function loadRatings(product) {
-            const avgRating = calculateAverageRating(product.ratings);
-            const text = product.ratings.length > 0 
-                ? `Note moyenne : ${avgRating.toFixed(1)}/5 (${product.ratings.length} avis)`
-                : 'Soyez le premier à noter ce produit';
-            
-            document.getElementById('ratingAverage').textContent = text;
-            updateStarsDisplay(avgRating);
-        }
-
-        function updateStarsDisplay(rating) {
-            const stars = document.querySelectorAll('#starsInput .star');
-            stars.forEach((star, index) => {
-                if (index < Math.round(rating)) {
-                    star.textContent = '★';
-                    star.classList.add('active');
-                } else {
-                    star.textContent = '☆';
-                    star.classList.remove('active');
-                }
-            });
-        }
-
-        function calculateAverageRating(ratings) {
-            if (ratings.length === 0) return 0;
-            return ratings.reduce((a, b) => a + b, 0) / ratings.length;
-        }
-
-        function addComment() {
-            const input = document.getElementById('commentInput');
-            const text = input.value.trim();
-            
-            if (!text) {
-                showToast('⚠️ Veuillez écrire un commentaire');
-                return;
-            }
-            
-            const comment = {
-                author: getUserName(),
-                text: text,
-                date: new Date().toISOString(),
-                rating: calculateAverageRating(currentProduct.ratings)
-            };
-            
-            currentProduct.comments.unshift(comment);
-            saveToStorage();
-            loadComments(currentProduct);
-            input.value = '';
-            showToast('✅ Commentaire publié avec succès !');
-        }
-
-        function loadComments(product) {
-            const container = document.getElementById('commentsList');
-            container.innerHTML = '';
-            
-            if (product.comments.length === 0) {
-                container.innerHTML = '<p class="no-comments">Aucun commentaire pour le moment. Soyez le premier à partager votre avis !</p>';
-                return;
-            }
-            
-            product.comments.forEach(comment => {
-                const div = document.createElement('div');
-                div.className = 'comment';
-                
-                const date = new Date(comment.date);
-                const formatted = date.toLocaleDateString('fr-FR', {
-                    day: 'numeric',
-                    month: 'long',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                div.innerHTML = `
-                    <div class="comment-header">
-                        <span class="comment-author">${escapeHtml(comment.author)}</span>
-                        <span class="comment-rating">${'★'.repeat(Math.round(comment.rating))}</span>
-                    </div>
-                    <p class="comment-text">${escapeHtml(comment.text)}</p>
-                    <p class="comment-date">${formatted}</p>
-                `;
-                
-                container.appendChild(div);
-            });
-        }
-
         function getUserName() {
             try {
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
@@ -1907,15 +1142,10 @@
                     if (user && user.first_name) return user.first_name;
                 }
             } catch (e) {}
-            return 'Utilisateur';
+            return 'Client';
         }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
+        // TOAST
         function showToast(message) {
             const toast = document.createElement('div');
             toast.className = 'toast';
@@ -1928,49 +1158,16 @@
             }, 2500);
         }
 
-        function saveToStorage() {
-            try {
-                localStorage.setItem('vmenu_data', JSON.stringify(CONFIG.categories));
-            } catch (e) {
-                console.log('Erreur de sauvegarde');
-            }
-        }
-
-        function loadStoredData() {
-            try {
-                const stored = localStorage.getItem('vmenu_data');
-                if (stored) {
-                    const data = JSON.parse(stored);
-                    data.forEach((storedCategory, catIndex) => {
-                        if (CONFIG.categories[catIndex]) {
-                            storedCategory.products.forEach((storedProduct, prodIndex) => {
-                                if (CONFIG.categories[catIndex].products[prodIndex]) {
-                                    CONFIG.categories[catIndex].products[prodIndex].ratings = storedProduct.ratings || [];
-                                    CONFIG.categories[catIndex].products[prodIndex].comments = storedProduct.comments || [];
-                                }
-                            });
-                        }
-                    });
-                }
-            } catch (e) {
-                console.log('Erreur de chargement');
-            }
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (document.getElementById('productModal').classList.contains('active')) {
-                if (e.key === 'Escape') {
-                    closeModal();
-                } else if (e.key === 'ArrowLeft') {
-                    navigateCarousel(-1);
-                } else if (e.key === 'ArrowRight') {
-                    navigateCarousel(1);
-                }
-            }
-        });
-
+        // FERMER MODAL EN CLIQUANT À L'EXTÉRIEUR
         document.getElementById('productModal').addEventListener('click', (e) => {
             if (e.target.id === 'productModal') closeModal();
+        });
+
+        // NAVIGATION CLAVIER
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('productModal').classList.contains('active')) {
+                if (e.key === 'Escape') closeModal();
+            }
         });
     </script>
 </body>
