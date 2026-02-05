@@ -35,7 +35,7 @@
             overflow: hidden;
         }
 
-        /* PAGE D'INFOS - PLEIN ÉCRAN SANS DÉFILEMENT */
+        /* PAGE D'INFOS - PLEIN ÉCRAN AVEC DÉFILEMENT */
         .info-page {
             position: fixed;
             top: 0;
@@ -48,7 +48,9 @@
             align-items: center;
             justify-content: center;
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 2rem 0;
         }
 
         .info-page.hidden {
@@ -62,6 +64,7 @@
             max-width: 600px;
             width: 100%;
             animation: slideUp 0.8s ease-out;
+            margin: auto;
         }
 
         @keyframes slideUp {
@@ -956,7 +959,7 @@
         window.onload = function() {
             initTelegramWebApp();
             loadCategories();
-            document.body.style.overflow = 'hidden'; // Bloquer le scroll initial
+            // La page d'info permet le scroll
         };
 
         function initTelegramWebApp() {
@@ -977,7 +980,6 @@
         function showInfo() {
             document.getElementById('infoPage').classList.remove('hidden');
             document.getElementById('mainContent').classList.remove('visible');
-            document.body.style.overflow = 'hidden'; // Bloquer le scroll
         }
 
         // CHARGEMENT DES CATÉGORIES
