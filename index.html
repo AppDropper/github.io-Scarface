@@ -881,30 +881,33 @@
                     products: [
                         {
                             id: 1,
-                            name: 'Dry Dift🌺',
+                            visible: true, // ⚠️ true = visible | false = masqué
+                            name: 'Dry 120U🌺',
                             description: 'Dry 120U🌺 - No Farm🧑‍🌾',
-                            price: '60€/10G',
-                            badge: '⭐Low Price⭐',
+                            price: '70€/10G',
+                            badge: '⭐ Top',
                             image: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true',
-                            formats: [ 
+                            formats: [
+                                { name: '3g', price: '30€' },
                                 { name: '5g', price: '40€' },
-                                { name: '10g', price: '60€' },
-                                { name: '50g', price: '220€' },
-                                { name: '100g', price: '400€' },
-                                { name: 'Pour +', price: 'Arrangements possibles' }
+                                { name: '10g', price: '70€' },
+                                { name: '50g', price: '250€' },
+                                { name: '100g', price: '450€' }
                             ]
                         },
                         {
                             id: 2,
-                            name: '🫒120u Mandarin X Runtz🍊',
-                            description: 'Goût fruité🍊 et chill intense 🛋️!',
-                            price: '60€/10G',
-                            badge: '🍊💯',
+                            visible: false, // ⚠️ MASQUÉ - Produit préparé pour plus tard
+                            name: 'Premium H',
+                            description: 'Qualité exceptionnelle',
+                            price: '80€/10G',
+                            badge: '💎 Premium',
                             image: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true',
                             formats: [
                                 { name: '5g', price: '50€' },
                                 { name: '10g', price: '80€' },
-                                { name: '50g', price: '300€' } 
+                                { name: '25g', price: '180€' },
+                                { name: '50g', price: '320€' }
                             ]
                         }
                     ]
@@ -915,8 +918,9 @@
                     id: 'flowers',
                     name: '🌿 Fleurs',
                     products: [
-                        xxx{
+                        {
                             id: 3,
+                            visible: false, // ⚠️ MASQUÉ - En attente de stock
                             name: 'Weed Premium',
                             description: 'Nos meilleures fleurs sélectionnées',
                             price: '10€/g',
@@ -941,6 +945,7 @@
                     products: [
                         {
                             id: 4,
+                            visible: true, // ⚠️ true = visible | false = masqué
                             name: 'Coco ❄️ 0.93',
                             description: 'Qualité supérieure testée en laboratoire',
                             price: '60€/g',
@@ -955,8 +960,9 @@
                                 { name: '100g', price: '3200€' }
                             ]
                         },
-                        xxx{
+                        {
                             id: 5,
+                            visible: false, // ⚠️ MASQUÉ - Produit bientôt disponible
                             name: 'Crystal Pure',
                             description: 'Pureté maximale garantie',
                             price: '70€/g',
@@ -1043,7 +1049,10 @@
         function loadProducts(category) {
             const grid = document.getElementById(`grid-${category.id}`);
             
-            category.products.forEach(product => {
+            // Filtrer uniquement les produits visibles
+            const visibleProducts = category.products.filter(product => product.visible === true);
+            
+            visibleProducts.forEach(product => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.onclick = () => openModal(product);
