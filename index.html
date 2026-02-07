@@ -166,6 +166,11 @@
             color: var(--white);
             text-decoration: underline;
             font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .info-value a:hover {
+            opacity: 0.8;
         }
 
         .enter-btn {
@@ -763,7 +768,7 @@
                     <div class="info-content">
                         <div class="info-label">Contact</div>
                         <div class="info-value">
-                            <a href="https://t.me/VotreUsername" target="_blank">Le_bon33000</a>
+                            <a href="https://t.me/Le_bon33000" target="_blank" rel="noopener">@Le_bon33000</a>
                         </div>
                     </div>
                 </div>
@@ -852,44 +857,68 @@
 
     <script>
         // ========================================
-        // CONFIGURATION
+        // ⚠️ CONFIGURATION - MODIFIER ICI ⚠️
         // ========================================
         const CONFIG = {
-            telegramUsername: 'Le_bon33000', // ⚠️ MODIFIEZ ICI VOTRE @
-            contactLink: 'https://t.me/+V_9Nb87C6wNiMDG0', // ⚠️ MODIFIEZ ICI
-            horaires: 'Lundi - Dimanche, 10h00 - 23h00', // ⚠️ MODIFIEZ ICI
-            lieu: 'Bordeaux et alentours', // ⚠️ MODIFIEZ ICI
+            // Contact Telegram
+            telegramUsername: 'Le_bon33000',
             
+            // Informations affichées sur la page info
+            infos: {
+                contact: '@Le_bon33000',
+                contactLink: 'https://t.me/Le_bon33000',
+                horaires: 'Lundi - Dimanche\n10h00 - 02h00',
+                lieu: 'Bordeaux, France\nService disponible 24/7',
+                livraison: 'Rapide et discrète\nSur toute la région'
+            },
+            
+            // Catalogue produits
             categories: [
+                // ========== CATÉGORIE 1: H ==========
                 {
                     id: 'h',
                     name: '🍫 H',
-                    products: [ 
+                    products: [
                         {
                             id: 1,
-                            name: 'Dry 120U🌺',
+                            name: 'Dry Dift🌺',
                             description: 'Dry 120U🌺 - No Farm🧑‍🌾',
-                            price: '70€/10G',
-                            badge: '⭐ Top',
+                            price: '60€/10G',
+                            badge: '⭐Low Price⭐',
+                            image: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true',
+                            formats: [ 
+                                { name: '5g', price: '40€' },
+                                { name: '10g', price: '60€' },
+                                { name: '50g', price: '220€' },
+                                { name: '100g', price: '400€' },
+                                { name: 'Pour +', price: 'Arrangements possibles' }
+                            ]
+                        },
+                        {
+                            id: 2,
+                            name: '🫒120u Mandarin X Runtz🍊',
+                            description: 'Goût fruité🍊 et chill intense 🛋️!',
+                            price: '60€/10G',
+                            badge: '🍊💯',
                             image: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true',
                             formats: [
-                                { name: '3g', price: '30€' },
-                                { name: '5g', price: '40€' },
-                                { name: '10g', price: '70€' },
-                                { name: '50g', price: '250€' },
-                                { name: '100g', price: '450€' }
+                                { name: '5g', price: '50€' },
+                                { name: '10g', price: '80€' },
+                                { name: '50g', price: '300€' } 
                             ]
                         }
                     ]
                 },
+                
+                // ========== CATÉGORIE 2: FLEURS ==========
                 {
                     id: 'flowers',
                     name: '🌿 Fleurs',
                     products: [
-                        {
-                            id: 2,
+                        xxx{
+                            id: 3,
                             name: 'Weed Premium',
-                            description: 'Nos meilleures fleurs arrivent prochainement',
+                            description: 'Nos meilleures fleurs sélectionnées',
                             price: '10€/g',
                             badge: '🌿 Nature',
                             image: 'https://github.com/AppDropper/github.io-LeV/blob/main/gitkeep/be%20back%20soon.jpg?raw=true',
@@ -897,19 +926,23 @@
                                 { name: '2g', price: '20€' },
                                 { name: '3g', price: '30€' },
                                 { name: '5g', price: '50€' },
-                                { name: '10g', price: '100€' }
+                                { name: '10g', price: '100€' },
+                                { name: '25g', price: '220€' },
+                                { name: '50g', price: '400€' }
                             ]
                         }
                     ]
                 },
+                
+                // ========== CATÉGORIE 3: LABO ==========
                 {
                     id: 'labo',
                     name: '💎 Labo',
                     products: [
                         {
-                            id: 3,
+                            id: 4,
                             name: 'Coco ❄️ 0.93',
-                            description: 'Qualité supérieure',
+                            description: 'Qualité supérieure testée en laboratoire',
                             price: '60€/g',
                             badge: '❄️ Pure',
                             image: 'https://github.com/AppDropper/LeVapp/blob/main/gitkeep/Capture%20d%E2%80%99%C3%A9cran%202026-01-17%20153548.jpg?raw=true',
@@ -921,20 +954,35 @@
                                 { name: '50g', price: '1750€' },
                                 { name: '100g', price: '3200€' }
                             ]
+                        },
+                        xxx{
+                            id: 5,
+                            name: 'Crystal Pure',
+                            description: 'Pureté maximale garantie',
+                            price: '70€/g',
+                            badge: '💎 VIP',
+                            image: 'https://github.com/AppDropper/LeVapp/blob/main/gitkeep/Capture%20d%E2%80%99%C3%A9cran%202026-01-17%20153548.jpg?raw=true',
+                            formats: [
+                                { name: '1g', price: '70€' },
+                                { name: '3g', price: '190€' },
+                                { name: '5g', price: '300€' },
+                                { name: '10g', price: '550€' }
+                            ]
                         }
                     ]
                 }
             ]
         };
 
+        // ========================================
+        // CODE FONCTIONNEL - NE PAS MODIFIER
+        // ========================================
         let currentProduct = null;
         let selectedFormat = null;
 
-        // INITIALISATION
         window.onload = function() {
             initTelegramWebApp();
             loadCategories();
-            // La page d'info permet le scroll
         };
 
         function initTelegramWebApp() {
@@ -945,11 +993,10 @@
             }
         }
 
-        // NAVIGATION PAGE INFO
         function enterSite() {
             document.getElementById('infoPage').classList.add('hidden');
             document.getElementById('mainContent').classList.add('visible');
-            document.body.style.overflow = 'auto'; // Activer le scroll
+            document.body.style.overflow = 'auto';
         }
 
         function showInfo() {
@@ -957,20 +1004,17 @@
             document.getElementById('mainContent').classList.remove('visible');
         }
 
-        // CHARGEMENT DES CATÉGORIES
         function loadCategories() {
             const tabsContainer = document.getElementById('categoryTabs');
             const productsContainer = document.getElementById('productsContainer');
             
             CONFIG.categories.forEach((category, index) => {
-                // Créer l'onglet
                 const tab = document.createElement('div');
                 tab.className = 'category-tab' + (index === 0 ? ' active' : '');
                 tab.textContent = category.name;
                 tab.onclick = function() { switchCategory(category.id, this); };
                 tabsContainer.appendChild(tab);
                 
-                // Créer la section
                 const section = document.createElement('div');
                 section.className = 'category-section' + (index === 0 ? ' active' : '');
                 section.id = `category-${category.id}`;
@@ -1023,7 +1067,6 @@
             });
         }
 
-        // MODAL
         function openModal(product) {
             if (typeof product === 'string') {
                 product = JSON.parse(product.replace(/&quot;/g, '"'));
@@ -1074,7 +1117,6 @@
             element.classList.add('selected');
         }
 
-        // COMMANDE
         function orderProduct() {
             if (!selectedFormat) {
                 showToast('⚠️ Veuillez sélectionner un format');
@@ -1122,7 +1164,6 @@
             return 'Client';
         }
 
-        // TOAST
         function showToast(message) {
             const toast = document.createElement('div');
             toast.className = 'toast';
@@ -1135,12 +1176,10 @@
             }, 2500);
         }
 
-        // FERMER MODAL EN CLIQUANT À L'EXTÉRIEUR
         document.getElementById('productModal').addEventListener('click', (e) => {
             if (e.target.id === 'productModal') closeModal();
         });
 
-        // NAVIGATION CLAVIER
         document.addEventListener('keydown', (e) => {
             if (document.getElementById('productModal').classList.contains('active')) {
                 if (e.key === 'Escape') closeModal();
